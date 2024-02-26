@@ -9,6 +9,7 @@
 #import "DOAppDelegate.h"
 
 #import "DOEnvironmentManager.h"
+#import "DOJailbreaker.h"
 #import <libjailbreak/info.h>
 #import <libjailbreak/jbclient_xpc.h>
 
@@ -31,6 +32,15 @@ int main(int argc, char * argv[]) {
         if (!strcmp(argv[1], "prepare_jbupdate")) {
             [[DOEnvironmentManager sharedManager] reboot];
             return 0;
+        }
+        
+        if (!strcmp(argv[1], "jailbreak")) {
+            DOJailbreaker *jailbreaker = [[DOJailbreaker alloc] init];
+            NSError *error = nil;
+            BOOL didRemoveJailbreak = NO;
+            BOOL showLogs = YES;
+            [jailbreaker runWithError:&error didRemoveJailbreak:&didRemoveJailbreak showLogs:&showLogs];
+            [jailbreaker finalize];
         }
     }
     
